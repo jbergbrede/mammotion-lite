@@ -5,15 +5,15 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 from .const import CONF_LOCAL_NAME
-from .coordinator import MammotionCoordinator
 
 PLATFORMS = [Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    from .ble import (
-        async_register_passive_listener,  # avoid top-level HA component import
-    )
+    # Lazy imports: pymammotion (and HA bluetooth) must not be imported at
+    # module level — the package __init__ runs before HA installs requirements.
+    from .ble import async_register_passive_listener
+    from .coordinator import MammotionCoordinator
 
     coordinator = MammotionCoordinator(hass=hass, entry=entry)
     await coordinator.async_config_entry_first_refresh()

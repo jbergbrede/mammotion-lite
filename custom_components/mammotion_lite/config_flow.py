@@ -8,7 +8,6 @@ from homeassistant.components.bluetooth import BluetoothServiceInfoBleak
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .cloud import CloudAuthError, CloudTransientError, MammotionCloudClient
 from .const import CONF_EMAIL, CONF_IOT_ID, CONF_LOCAL_NAME, CONF_PASSWORD, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -87,6 +86,8 @@ class MammotionLiteConfigFlow(ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
 
         if user_input is not None:
+            from .cloud import CloudAuthError, CloudTransientError, MammotionCloudClient  # noqa: PLC0415
+
             email = user_input[CONF_EMAIL].strip()
             password = user_input[CONF_PASSWORD]
             session = async_get_clientsession(self.hass)
