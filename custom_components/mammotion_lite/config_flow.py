@@ -41,7 +41,8 @@ class MammotionLiteConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_bluetooth_confirm(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        assert self._discovered_name is not None
+        if self._discovered_name is None:
+            return self.async_abort(reason="already_configured")
         if user_input is not None:
             self._local_name = self._discovered_name
             return await self.async_step_cloud_auth()

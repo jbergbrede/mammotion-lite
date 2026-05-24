@@ -42,6 +42,7 @@ class MammotionCoordinator(DataUpdateCoordinator[MowerState]):
         super().__init__(
             hass,
             _LOGGER,
+            config_entry=entry,
             name=f"{DOMAIN}:{entry.title}",
             update_interval=UPDATE_INTERVAL_IDLE,
         )
