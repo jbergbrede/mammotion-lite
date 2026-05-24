@@ -12,7 +12,7 @@
   "integration_type": "device",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/jbergbrede/mammotion-lite/issues",
-  "requirements": [],
-  "version": "0.1.2",
+  "requirements": ["pymammotion"],
+  "version": "0.2.0",
   "homeassistant": "2025.5.0"
 }

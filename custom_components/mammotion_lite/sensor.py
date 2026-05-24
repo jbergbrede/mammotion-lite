@@ -15,6 +15,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
     EntityCategory,
+    UnitOfTime,
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
@@ -33,6 +34,34 @@ class MammotionSensorEntityDescription(SensorEntityDescription):
 
 
 SENSOR_DESCRIPTIONS: tuple[MammotionSensorEntityDescription, ...] = (
+    # ── Cloud-sourced ──────────────────────────────────────────────────
+    MammotionSensorEntityDescription(
+        key="status",
+        translation_key="status",
+        device_class=SensorDeviceClass.ENUM,
+        options=["unknown", "idle", "mowing", "paused", "returning", "charging", "error"],
+        value_fn=lambda s: s.status.value,
+        available_fn=lambda s: s.last_seen_cloud is not None,
+    ),
+    MammotionSensorEntityDescription(
+        key="battery",
+        translation_key="battery",
+        device_class=SensorDeviceClass.BATTERY,
+        native_unit_of_measurement="%",
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda s: s.battery_pct,
+        available_fn=lambda s: s.battery_pct is not None and s.last_seen_cloud is not None,
+    ),
+    MammotionSensorEntityDescription(
+        key="last_seen_cloud",
+        translation_key="last_seen_cloud",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda s: s.last_seen_cloud,
+        available_fn=lambda s: s.last_seen_cloud is not None,
+    ),
+    # ── BLE-sourced (passive bonus) ────────────────────────────────────
     MammotionSensorEntityDescription(
         key="rssi",
         translation_key="rssi",

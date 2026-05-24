@@ -14,10 +14,29 @@
         "data_description": {
           "local_name": "The Bluetooth device name advertised by your mower"
         }
+      },
+      "cloud_auth": {
+        "title": "Mammotion Account",
+        "description": "Enter your Mammotion app credentials.",
+        "data": {
+          "email": "Email",
+          "password": "Password"
+        }
+      },
+      "cloud_device": {
+        "title": "Select Mower",
+        "description": "Select the mower to configure.",
+        "data": {
+          "iot_id": "Mower"
+        }
       }
     },
     "error": {
-      "invalid_local_name": "Local name cannot be empty"
+      "invalid_local_name": "Local name cannot be empty",
+      "invalid_auth": "Invalid email or password",
+      "cannot_connect": "Cannot connect to Mammotion cloud",
+      "no_devices": "No devices found in your account",
+      "unknown": "Unexpected error"
     },
     "abort": {
       "already_configured": "This device is already configured"
@@ -25,6 +44,24 @@
   },
   "entity": {
     "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "unknown": "Unknown",
+          "idle": "Idle",
+          "mowing": "Mowing",
+          "paused": "Paused",
+          "returning": "Returning",
+          "charging": "Charging",
+          "error": "Error"
+        }
+      },
+      "battery": {
+        "name": "Battery"
+      },
+      "last_seen_cloud": {
+        "name": "Last seen (cloud)"
+      },
       "rssi": {
         "name": "Signal strength"
       },
