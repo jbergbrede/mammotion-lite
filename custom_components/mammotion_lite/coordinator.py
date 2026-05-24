@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import logging
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import DOMAIN, UPDATE_INTERVAL_IDLE
 from .state import MowerState, merge_ble_advertisement
+
+AVAILABILITY_REFRESH_INTERVAL = timedelta(minutes=1)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,6 +34,18 @@ class MammotionCoordinator(DataUpdateCoordinator[MowerState]):
             update_interval=UPDATE_INTERVAL_IDLE,
         )
         self.entry = entry
+        entry.async_on_unload(
+            async_track_time_interval(
+                hass,
+                self._async_refresh_listeners,
+                AVAILABILITY_REFRESH_INTERVAL,
+            )
+        )
+
+    @callback
+    def _async_refresh_listeners(self, _now: datetime) -> None:
+        # Re-push current state so entities re-evaluate wall-clock `available`.
+        self.async_update_listeners()
 
     async def _async_update_data(self) -> MowerState:
         # Phase 1: no cloud. Return current state or initial default.

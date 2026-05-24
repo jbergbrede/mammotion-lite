@@ -1,6 +1,10 @@
 {
   "config": {
+    "flow_title": "{name}",
     "step": {
+      "bluetooth_confirm": {
+        "description": "Set up {name}?"
+      },
       "user": {
         "title": "Connect Mammotion Mower",
         "description": "Enter the Bluetooth local name of your mower (e.g. Luba-ABCD or Yuka-ABCD). You can find this in the Mammotion app or your Bluetooth scanner.",

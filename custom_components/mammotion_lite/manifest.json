@@ -1,14 +1,18 @@
 {
   "domain": "mammotion_lite",
   "name": "Mammotion Lite",
-  "codeowners": [],
+  "codeowners": ["@jbergbrede"],
   "config_flow": true,
   "dependencies": ["bluetooth"],
-  "documentation": "https://github.com/jmadison/mammotion-lite",
+  "bluetooth": [
+    {"local_name": "Luba-*"},
+    {"local_name": "Yuka-*"}
+  ],
+  "documentation": "https://github.com/jbergbrede/mammotion-lite",
   "integration_type": "device",
-  "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/jmadison/mammotion-lite/issues",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/jbergbrede/mammotion-lite/issues",
   "requirements": [],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homeassistant": "2025.5.0"
 }
