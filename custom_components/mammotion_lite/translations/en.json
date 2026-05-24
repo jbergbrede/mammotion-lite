@@ -1,0 +1,32 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Mammotion Mower",
+        "description": "Enter the Bluetooth local name of your mower (e.g. Luba-ABCD or Yuka-ABCD). You can find this in the Mammotion app or your Bluetooth scanner.",
+        "data": {
+          "local_name": "BLE local name"
+        },
+        "data_description": {
+          "local_name": "The Bluetooth device name advertised by your mower"
+        }
+      }
+    },
+    "error": {
+      "invalid_local_name": "Local name cannot be empty"
+    },
+    "abort": {
+      "already_configured": "This device is already configured"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "rssi": {
+        "name": "Signal strength"
+      },
+      "last_seen_ble": {
+        "name": "Last seen (BLE)"
+      }
+    }
+  }
+}

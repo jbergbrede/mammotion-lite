@@ -1,0 +1,14 @@
+{
+  "domain": "mammotion_lite",
+  "name": "Mammotion Lite",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": ["bluetooth"],
+  "documentation": "https://github.com/jmadison/mammotion-lite",
+  "integration_type": "device",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/jmadison/mammotion-lite/issues",
+  "requirements": [],
+  "version": "0.1.0",
+  "homeassistant": "2025.5.0"
+}
