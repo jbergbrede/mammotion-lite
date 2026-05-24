@@ -86,7 +86,11 @@ class MammotionLiteConfigFlow(ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
 
         if user_input is not None:
-            from .cloud import CloudAuthError, CloudTransientError, MammotionCloudClient  # noqa: PLC0415
+            from .cloud import (  # noqa: PLC0415
+                CloudAuthError,
+                CloudTransientError,
+                MammotionCloudClient,
+            )
 
             email = user_input[CONF_EMAIL].strip()
             password = user_input[CONF_PASSWORD]
