@@ -12,7 +12,10 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import EntityCategory, UnitOfSignalStrength
+from homeassistant.const import (
+    SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
+    EntityCategory,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -34,7 +37,7 @@ SENSOR_DESCRIPTIONS: tuple[MammotionSensorEntityDescription, ...] = (
         key="rssi",
         translation_key="rssi",
         device_class=SensorDeviceClass.SIGNAL_STRENGTH,
-        native_unit_of_measurement=UnitOfSignalStrength.DECIBELS_MILLIWATT,
+        native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
         entity_category=EntityCategory.DIAGNOSTIC,
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=lambda s: s.rssi,
@@ -68,6 +71,7 @@ async def async_setup_entry(
 
 class MammotionSensorEntity(CoordinatorEntity[MammotionCoordinator], SensorEntity):
     _attr_has_entity_name = True
+    entity_description: MammotionSensorEntityDescription
 
     def __init__(
         self,
@@ -89,7 +93,7 @@ class MammotionSensorEntity(CoordinatorEntity[MammotionCoordinator], SensorEntit
 
     @property
     def available(self) -> bool:
-        if not super().available:
+        if not bool(super().available):
             return False
         return self.entity_description.available_fn(
             self.coordinator.data or MowerState()
