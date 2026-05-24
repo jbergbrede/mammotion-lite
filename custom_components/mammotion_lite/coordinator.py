@@ -36,7 +36,7 @@ _RATE_LIMIT_BACKOFF = timedelta(minutes=30)
 
 
 class MammotionCoordinator(DataUpdateCoordinator[MowerState]):
-    """Single coordinator per config entry. Polls cloud; BLE updates pushed via callback."""
+    """Single coordinator per config entry."""
 
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
         super().__init__(
@@ -100,13 +100,13 @@ class MammotionCoordinator(DataUpdateCoordinator[MowerState]):
         except CloudAuthError as err:
             raise UpdateFailed(f"auth error: {err}") from err
         except CloudRateLimitedError as err:
-            _LOGGER.warning("Rate limited for %s — backing off to 30 min", self.entry.title)
+            _LOGGER.warning("Rate limited for %s — backing off", self.entry.title)
             self._rate_limited = True
             self.update_interval = _RATE_LIMIT_BACKOFF
             raise UpdateFailed(f"rate limited: {err}") from err
         except CloudDeviceOfflineError:
             _LOGGER.debug("Device %s is offline", self.entry.title)
-            raise UpdateFailed("device offline")
+            raise UpdateFailed("device offline") from None
         except CloudTransientError as err:
             raise UpdateFailed(f"transient: {err}") from err
 

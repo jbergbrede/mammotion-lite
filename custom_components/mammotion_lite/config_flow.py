@@ -141,7 +141,9 @@ class MammotionLiteConfigFlow(ConfigFlow, domain=DOMAIN):
                 },
             )
 
-        device_options = {d.iot_id: f"{d.nickname} ({d.device_name})" for d in self._devices}
+        device_options = {
+            d.iot_id: f"{d.nickname} ({d.device_name})" for d in self._devices
+        }
         return self.async_show_form(
             step_id="cloud_device",
             data_schema=vol.Schema({vol.Required(CONF_IOT_ID): vol.In(device_options)}),

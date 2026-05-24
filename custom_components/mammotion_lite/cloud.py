@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import base64
 import logging
-import time
 from dataclasses import dataclass
 from typing import Any
 
@@ -97,7 +96,8 @@ class MammotionCloudClient:
             raise CloudTransientError(f"invoke code={resp.code}: {resp.msg}")
 
         data: dict[str, Any] = resp.data or {}
-        _LOGGER.debug("mqtt_invoke raw response data: %s", data)  # remove after confirmed
+        # Log raw shape once to confirm response format; remove after confirmed
+        _LOGGER.debug("mqtt_invoke raw response data: %s", data)
         raw_b64: str = data.get("content") or data.get("data", {}).get("content", "")
         if not raw_b64:
             raise CloudTransientError(f"no content in invoke response: {data}")

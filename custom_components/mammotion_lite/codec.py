@@ -15,8 +15,8 @@ from pymammotion.proto.luba_msg_pb2 import (
     MsgDevice,
 )
 from pymammotion.proto.mctrl_sys_pb2 import (
-    MctlSys,
     RPT_START,
+    MctlSys,
     report_info_cfg,
     rpt_act,
 )
