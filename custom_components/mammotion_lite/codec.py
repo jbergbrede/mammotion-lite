@@ -20,28 +20,29 @@ from pymammotion.proto.mctrl_sys_pb2 import (
     report_info_cfg,
     rpt_act,
 )
-from pymammotion.utility.constant.device_constant import WorkMode
 
 _STATUS_REPORT_SUBS = [1, 3, 5, 6]  # RIT_CONNECT, RIT_DEV_LOCAL, RIT_WORK, RIT_DEV_STA
 
 # Silence unused-import warnings from mypy for pb2 type aliases
 _ = (MsgAttr, MsgCmdType, MsgDevice, rpt_act)
 
+# Integer values from WorkMode enum — avoids hard dependency on enum attributes
+# that may be missing in older pymammotion releases.
 _WORK_MODE_TO_STATUS: dict[int, str] = {
-    WorkMode.MODE_NOT_ACTIVE: "idle",
-    WorkMode.MODE_ONLINE: "idle",
-    WorkMode.MODE_READY: "idle",
-    WorkMode.MODE_WORKING: "mowing",
-    WorkMode.MODE_MANUAL_MOWING: "mowing",
-    WorkMode.MODE_RETURNING: "returning",
-    WorkMode.MODE_CHARGING: "charging",
-    WorkMode.MODE_CHARGING_PAUSE: "paused",
-    WorkMode.MODE_PAUSE: "paused",
-    WorkMode.MODE_POWER_OFF: "idle",
-    WorkMode.MODE_DISABLE: "idle",
-    WorkMode.MODE_INITIALIZATION: "idle",
-    WorkMode.MODE_LOCK: "error",
-    WorkMode.MODE_LOCATION_ERROR: "error",
+    0: "idle",  # MODE_NOT_ACTIVE
+    1: "idle",  # MODE_ONLINE
+    3: "idle",  # MODE_POWER_OFF
+    8: "idle",  # MODE_DISABLE
+    10: "idle",  # MODE_INITIALIZATION
+    11: "idle",  # MODE_READY
+    13: "mowing",  # MODE_WORKING
+    14: "returning",  # MODE_RETURNING
+    15: "charging",  # MODE_CHARGING
+    17: "error",  # MODE_LOCK
+    19: "paused",  # MODE_PAUSE
+    20: "mowing",  # MODE_MANUAL_MOWING
+    37: "error",  # MODE_LOCATION_ERROR
+    39: "paused",  # MODE_CHARGING_PAUSE
 }
 
 

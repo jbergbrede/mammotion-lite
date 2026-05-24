@@ -52,7 +52,10 @@ class MammotionCloudClient:
             resp = await self._http.login_v2(self._email, self._password)
         except AuthError as err:
             raise CloudAuthError(str(err)) from err
-        if resp.code != 0:
+        if resp.data is None:
+            _LOGGER.warning(
+                "Mammotion login failed: code=%s msg=%s", resp.code, resp.msg
+            )  # noqa: E501
             raise CloudAuthError(f"login failed code={resp.code}: {resp.msg}")
 
     async def list_devices(self) -> list[CloudDevice]:
