@@ -18,6 +18,7 @@ class MammotionLiteConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     def __init__(self) -> None:
+        super().__init__()
         self._discovered_name: str | None = None
         self._local_name: str | None = None
         self._devices: list[Any] = []
