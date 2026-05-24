@@ -39,5 +39,5 @@ def async_register_passive_listener(
         hass,
         _handle,
         bluetooth.BluetoothCallbackMatcher(local_name=device_name),
-        bluetooth.BluetoothScanningMode.PASSIVE,
+        bluetooth.BluetoothScanningMode.ACTIVE,
     )
