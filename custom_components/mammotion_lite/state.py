@@ -28,7 +28,7 @@ class MowerState:
     charge_state: int | None = None
     progress_pct: int | None = None
     rssi: int | None = None
-    last_seen_ble: datetime | None = None   # timezone-aware UTC
+    last_seen_ble: datetime | None = None  # timezone-aware UTC
     last_seen_cloud: datetime | None = None  # timezone-aware UTC
     plans: tuple[Plan, ...] = field(default_factory=tuple)
 

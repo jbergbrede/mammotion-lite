@@ -39,7 +39,13 @@ SENSOR_DESCRIPTIONS: tuple[MammotionSensorEntityDescription, ...] = (
         translation_key="status",
         device_class=SensorDeviceClass.ENUM,
         options=[
-            "unknown", "idle", "mowing", "paused", "returning", "charging", "error"
+            "unknown",
+            "idle",
+            "mowing",
+            "paused",
+            "returning",
+            "charging",
+            "error",
         ],
         value_fn=lambda s: s.status.value,
         available_fn=lambda s: s.last_seen_cloud is not None,
